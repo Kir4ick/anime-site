@@ -1,7 +1,9 @@
-export default function () {
+/* Функции валидаторы */
+
+export function validateConsent(consentId, buttonId) {
     /** Функция для блокировки кнопки в форме, для того, чтобы пользователь мог зарегистрироваться только при галке **/
-    let button = document.getElementById('register');
-    let input_consent = document.getElementById('scales');
+    let button = document.getElementById(buttonId); //'register'
+    let input_consent = document.getElementById(consentId); //scales
     let disabled = false;
 
     input_consent.addEventListener('change', function () {
@@ -13,4 +15,8 @@ export default function () {
 
         return disabled
     });
+}
+
+export function checkUndefinedValue(value) {
+    return value === undefined
 }

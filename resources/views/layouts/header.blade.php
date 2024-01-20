@@ -1,6 +1,6 @@
 <header>
     <img class="logo" src="{{ asset('img/image_23-ox0diCzpl-transformed 2.png') }}" alt="">
-    <a href="">
+    <a href="{{ route('biography') }}">
         <p class="bio">Биография</p>
     </a>
     <a href="">

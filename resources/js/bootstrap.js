@@ -8,10 +8,6 @@ window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-/** Мой код **/
-import redirect from "./actions/redirect.js";
-import consent from "./validation/consent.js";
-
 // import Echo from 'laravel-echo';
 
 // import Pusher from 'pusher-js';

@@ -10,6 +10,11 @@
             'title' => __('С возвращением в мир GHIbLI')
         ])
 
+        @php
+            $errors = $errors->getBags();
+            $errors['error'] = $error ?? null;
+        @endphp
+
         <sign-in
             action = '{!! route('action_sign-in') !!}'
             error-list = '@json($errors, JSON_UNESCAPED_UNICODE)'

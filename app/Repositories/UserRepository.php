@@ -12,7 +12,10 @@ class UserRepository implements IUserRepository
     {
         /** @var User|null $user */
         $user = User::query()
-            ->where('login', '=', $login)
+            ->where(function ($query) use ($login) {
+                return $query->where('login', '=', $login)
+                    ->orWhere('nickname', '=', $login);
+            })
             ->where('password', '=', $password_hash)
             ->first();
 
@@ -24,7 +27,6 @@ class UserRepository implements IUserRepository
         try {
             /** @var User $user */
             $user = User::query()->create($data);
-
             return $user;
         } catch (\Throwable $exception) {
             dd($exception->getMessage(), $exception->getTraceAsString());

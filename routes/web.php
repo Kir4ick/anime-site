@@ -7,6 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
+Route::get('/biography', function () {
+    return view('pages.biography');
+})->name('biography');
+
 # Роуты авторизации и регистрации
 Route::group(['middleware' => 'guest'], function () {
     # Авторизация
@@ -28,9 +32,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', \App\Http\Controllers\Authorize\LogoutController::class)
         ->name('logout');
 
+    # Роуты админа
     Route::group(['middleware' => 'admin'], function () {
         # Профиль
         Route::get('/profile', [\App\Http\Controllers\Profile\ProfileController::class, 'page'])
             ->name('profile');
+
+        Route::get('/articles', function () {
+            return view('pages.articles');
+        })->name('articles');
     });
 });

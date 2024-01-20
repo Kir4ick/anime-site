@@ -1,4 +1,7 @@
-<footer class="f2">
+@php
+    $class_footer = $class ?? 'f2'
+@endphp
+<footer class="{{ $class_footer }}">
     <a href="MULTI.html">
         <p class="textt1">Биография</p>
     </a>

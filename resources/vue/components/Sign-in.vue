@@ -7,13 +7,13 @@
             type="text"
             name="login"
             placeholder="Введите логин"
-            :value="oldData.login"
+            :value="modelOldData.login"
         >
-        <div v-if="objectErrorList.error !== undefined">
-            <div class="error_validation">{{ objectErrorList.error }}</div>
+        <div v-if="!checkUndefinedValue(modelErrorList.error)">
+            <div class="error_validation">{{ modelErrorList.error }}</div>
         </div>
-        <div v-if="objectErrorList.login !== undefined">
-            <div class="error_validation">{{ objectErrorList.login }}</div>
+        <div v-if="!checkUndefinedValue(modelErrorList.login)">
+            <div class="error_validation">{{ modelErrorList.login }}</div>
         </div>
         <br>
         <input
@@ -22,10 +22,10 @@
             type="password"
             name="password"
             placeholder="Введите пароль"
-            :value="oldData.password"
+            :value="modelOldData.password"
         >
-        <div v-if="objectErrorList.password !== undefined">
-            <div class="error_validation">{{ objectErrorList.password }}</div>
+        <div v-if="!checkUndefinedValue(modelErrorList.password)">
+            <div class="error_validation">{{ modelErrorList.password }}</div>
         </div>
         <br>
         <br>
@@ -37,6 +37,8 @@
 <script setup>
     import SignInService from "../services/signInService.js";
     import errorList from "../models/components/signIn/errorList.js";
+    import {checkUndefinedValue} from "../../js/validation/validators.js";
+    import {onMounted, reactive} from "vue";
 
     let service = new SignInService()
 
@@ -48,7 +50,13 @@
     })
 
     /** @type {errorList} **/
-    let objectErrorList = service.getObjectErrorList(props.errorList)
+    const modelErrorList = reactive(
+        service.getObjectErrorList(props.errorList)
+    )
+
+    const modelOldData = reactive(
+        JSON.parse(props.oldData)
+    )
 
     function signIn(e) {
         let errors = {}
@@ -65,15 +73,23 @@
             errors.password = passwordMessage
         }
 
-        if (errors.login !== undefined && errors.password !== undefined) {
-            objectErrorList = errors
+        if (!checkUndefinedValue(errors.login) || !checkUndefinedValue(errors.password)) {
+            modelErrorList.login = errors.login
+            modelErrorList.password = errors.password
             return null
         }
 
         e.target.submit()
     }
+
+    function clearInfoInTimeout() {
+        setInterval(() => {
+            modelErrorList.login = undefined
+            modelErrorList.password = undefined
+        }, 10000)
+    }
+
+    onMounted(() => {
+        clearInfoInTimeout()
+    })
 </script>
-
-<style scoped>
-
-</style>

@@ -5,20 +5,7 @@
 @section('content')
 <section class="main">
 
-    <header>
-        <a href="stats.html">
-            <p class="stats">статьи</p>
-        </a>
-        <p class="addendum">Добавление мультфильма</p>
-        <a href="{{ route('logout') }}">
-            <img
-                class="login2"
-                style="border-radius: 50%; object-fit: cover"
-                src="{{ $avatar_url }}"
-                alt=""
-            >
-        </a>
-    </header>
+    @include('layouts.admin.header')
 
     <section class="general">
         <div class="forms">

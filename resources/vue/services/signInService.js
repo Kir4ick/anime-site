@@ -1,5 +1,3 @@
-import consent from "../../js/validation/consent.js";
-
 export default class SignInService {
 
     getObjectErrorList(string) {

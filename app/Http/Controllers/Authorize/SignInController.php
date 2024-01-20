@@ -30,9 +30,9 @@ class SignInController extends Controller
         $password = $request->password;
         $password_hash = md5($password);
         $user = $repository->getUserByPasswordAndLogin($request->login, $password_hash);
-
-        if (!$user)
-            return view('pages.sign-in', ['error' => 'Такого пользователя не существует!']);
+        if (!$user) {
+            return view('pages.sign-in', ['error' => __('Такого пользователя не существует!')]);
+        }
 
         Auth::login($user);
         return redirect(route('index'));

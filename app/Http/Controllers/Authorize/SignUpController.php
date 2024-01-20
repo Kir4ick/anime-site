@@ -18,10 +18,11 @@ class SignUpController extends Controller
     public function __invoke(SignUpRequest $request, IUserOperations $operations)
     {
         $user = $operations->createUser($request->validationData(), $request->file('avatar'));
-        $message = 'При регистрации произошла ошибка.';
-        if (!$user) return view('pages.sign-up', ['message' => $message]);
+        if (!$user) {
+            return view('pages.sign-up', ['error' => __('При регистрации произошла ошибка.')]);
+        }
 
         Auth::login($user);
-        return redirect(route('index'));
+        return view('pages.sign-up', ['message' => __('Вы успешно зарегистрировались!')]);
     }
 }
