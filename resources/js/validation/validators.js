@@ -20,3 +20,11 @@ export function validateConsent(consentId, buttonId) {
 export function checkUndefinedValue(value) {
     return value === undefined
 }
+
+export function checkIsNullValue(value) {
+    return value === null
+}
+
+export function checkIsEmptyStringValue(value) {
+    return value === ''
+}

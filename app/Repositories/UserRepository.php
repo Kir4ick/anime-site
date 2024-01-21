@@ -2,35 +2,41 @@
 
 namespace App\Repositories;
 
+use App\Dto\Repositories\User\InputCreateUserRepository;
+use App\Dto\Repositories\User\InputGetUserByLoginAndPasswordRepository;
+use App\Dto\Repositories\User\OutputCreateUserRepository;
+use App\Dto\Repositories\User\OutputGetUserByLoginAndPasswordRepository;
 use App\Models\User;
 use App\Repositories\Interfaces\IUserRepository;
 
 class UserRepository implements IUserRepository
 {
 
-    public function getUserByPasswordAndLogin(string $login, string $password_hash): User|null
-    {
+    public function getUserByPasswordAndLogin(
+        InputGetUserByLoginAndPasswordRepository $input
+    ): OutputGetUserByLoginAndPasswordRepository {
         /** @var User|null $user */
         $user = User::query()
-            ->where(function ($query) use ($login) {
-                return $query->where('login', '=', $login)
-                    ->orWhere('nickname', '=', $login);
+            ->where(function ($query) use ($input) {
+                return $query->where('login', '=', $input->getLogin())
+                    ->orWhere('nickname', '=', $input->getLogin());
             })
-            ->where('password', '=', $password_hash)
+            ->where('password', '=', $input->getPassword())
             ->first();
 
-        return $user;
+        return (new OutputGetUserByLoginAndPasswordRepository())->setUser($user);
     }
 
-    public function createUser(array $data): User|null
+    public function createUser(InputCreateUserRepository $input): OutputCreateUserRepository
     {
-        try {
-            /** @var User $user */
-            $user = User::query()->create($data);
-            return $user;
-        } catch (\Throwable $exception) {
-            dd($exception->getMessage(), $exception->getTraceAsString());
-            return null;
-        }
+        /** @var User $user */
+        $user = User::query()->create([
+            'nickname' => $input->getNickname(),
+            'login' => $input->getLogin(),
+            'password' => $input->getPassword(),
+            'avatar' => $input->getAvatar(),
+        ]);
+
+        return (new OutputCreateUserRepository())->setUser($user);
     }
 }

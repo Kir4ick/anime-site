@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
         # Профиль
         Route::get('/profile', [\App\Http\Controllers\Profile\ProfileController::class, 'page'])
             ->name('profile');
-
+        # Статьи, написанные админом
         Route::get('/articles', function () {
             return view('pages.articles');
         })->name('articles');

@@ -2,10 +2,14 @@
 
 namespace App\Http\Operations\Interfaces;
 
-use App\Models\User;
-use Illuminate\Http\UploadedFile;
+use App\Dto\Operations\User\InputAuthUserOperation;
+use App\Dto\Operations\User\InputCreateUserOperation;
+use App\Dto\Operations\User\OutputAuthUserOperation;
+use App\Dto\Operations\User\OutputCreateUserOperation;
 
 interface IUserOperations
 {
-    public function createUser(array $validation_data, UploadedFile $file): ?User;
+    public function createUser(InputCreateUserOperation $input): OutputCreateUserOperation;
+
+    public function authorizeUser(InputAuthUserOperation $input): OutputAuthUserOperation;
 }

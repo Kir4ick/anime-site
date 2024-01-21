@@ -2,11 +2,17 @@
 
 namespace App\Repositories\Interfaces;
 
+use App\Dto\Repositories\User\InputCreateUserRepository;
+use App\Dto\Repositories\User\InputGetUserByLoginAndPasswordRepository;
+use App\Dto\Repositories\User\OutputCreateUserRepository;
+use App\Dto\Repositories\User\OutputGetUserByLoginAndPasswordRepository;
 use App\Models\User;
 
 interface IUserRepository
 {
-    public function getUserByPasswordAndLogin(string $login, string $password_hash): User|null;
+    public function getUserByPasswordAndLogin(
+        InputGetUserByLoginAndPasswordRepository $input
+    ): OutputGetUserByLoginAndPasswordRepository;
 
-    public function createUser(array $data): User|null;
+    public function createUser(InputCreateUserRepository $input): OutputCreateUserRepository;
 }

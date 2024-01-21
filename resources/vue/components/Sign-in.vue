@@ -1,5 +1,8 @@
 <template>
     <form class="form-reg" :action="action" method="post" @submit.prevent="signIn">
+        <div v-if="!checkIsEmptyStringValue(props.message)">
+            <div class="error_validation">{{ props.message }}</div>
+        </div>
         <div v-html="csrf"></div>
         <input
             class="green"
@@ -37,7 +40,7 @@
 <script setup>
     import SignInService from "../services/signInService.js";
     import errorList from "../models/components/signIn/errorList.js";
-    import {checkUndefinedValue} from "../../js/validation/validators.js";
+    import {checkIsEmptyStringValue, checkUndefinedValue} from "../../js/validation/validators.js";
     import {onMounted, reactive} from "vue";
 
     let service = new SignInService()
@@ -46,7 +49,9 @@
         errorList: String,
         action: String,
         oldData: String,
-        csrf: String
+        csrf: String,
+        message: String,
+        redirectPage: String
     })
 
     /** @type {errorList} **/
@@ -89,7 +94,17 @@
         }, 10000)
     }
 
+    function redirectToPage() {
+        setTimeout(() => {
+            window.location.href = props.redirectPage
+        }, 3000)
+    }
+
     onMounted(() => {
+        if (!checkIsEmptyStringValue(props.message)) {
+            redirectToPage()
+        }
+
         clearInfoInTimeout()
     })
 </script>

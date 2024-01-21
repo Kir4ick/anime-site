@@ -20,6 +20,8 @@
             error-list = '@json($errors, JSON_UNESCAPED_UNICODE)'
             old-data ='@json(['login' => old('login'), 'password' => old('password')], JSON_UNESCAPED_UNICODE)'
             csrf = '@csrf'
+            redirect-page = '{!! route('index') !!}'
+            message = '{!! $message ?? null !!}'
         ></sign-in>
 
         <a class="links" href="{{ route('sign-up') }}">

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Authorize;
 
+use App\Dto\Operations\User\InputAuthUserOperation;
 use App\Http\Controllers\Controller;
+use App\Http\Operations\Interfaces\IUserOperations;
 use App\Http\Requests\SignInRequest;
-use App\Repositories\Interfaces\IUserRepository;
-use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -18,24 +18,17 @@ class SignInController extends Controller
         return view('pages.sign-in');
     }
 
-    /**
-     * Логика авторизации
-     *
-     * @param SignInRequest $request
-     * @param IUserRepository $repository
-     * @return View|RedirectResponse
-     */
-    public function __invoke(SignInRequest $request, IUserRepository $repository): View|RedirectResponse
+    public function __invoke(SignInRequest $request, IUserOperations $operations): View|RedirectResponse
     {
-        $password = $request->password;
-        $password_hash = md5($password);
-        $user = $repository->getUserByPasswordAndLogin($request->login, $password_hash);
-        if (!$user) {
-            return view('pages.sign-in', ['error' => __('Такого пользователя не существует!')]);
+        $response = $operations->authorizeUser(
+            (new InputAuthUserOperation())->setLogin($request->login)->setPassword($request->password)
+        );
+        if ($response->getErrorMessage() != null) {
+            return view('pages.sign-in', ['error' => $response->getErrorMessage()]);
         }
 
-        Auth::login($user);
-        return redirect(route('index'));
+        $message = sprintf('Вы успешно авторизовались! %s', Auth::user()->nickname);
+        return view('pages.sign-in', ['message' => __($message)]);
     }
 }
 
