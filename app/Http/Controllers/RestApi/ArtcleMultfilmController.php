@@ -20,11 +20,11 @@ class ArtcleMultfilmController extends Controller
         $operation_response = $this->operations->firstCreateArticleMultfilm(
             (new FirstCreateArticleOperationInput())
                 ->setTitle($request->title)
-                ->setPremier($request->premier)
-                ->setPoster($request->file('poster'))
+                ->setPremier(new \DateTime($request->premier))
+                ->setPoster($request->poster)
         );
 
-        if ($operation_response->getErrorMessage() != null) {
+        if ($operation_response->getErrorMessage() !== null) {
             return new ErrorResource([
                 'error_message' => $operation_response->getErrorMessage(),
                 'code' => 500

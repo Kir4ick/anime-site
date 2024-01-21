@@ -25,7 +25,7 @@ class FisrtCreateArticleMultfilmRequest extends AbstractRestApiRequest
         return [
             'title' => 'required|min:4|max:255',
             'premier' => 'required|date',
-            'poster' => 'required|image'
+            'poster' => 'required|string'
         ];
     }
 
@@ -38,7 +38,7 @@ class FisrtCreateArticleMultfilmRequest extends AbstractRestApiRequest
             'premier.required' => __('Пожалуйста введите дату показа'),
             'premier.date' => __('Дата показа должна быть датой'),
             'poster.required' => __('Загрузите пожалуйста постер мультфильма'),
-            'poster.image' => __('Постер мультфильма должен быть изображением')
+            'poster.string' => __('Постер мультфильма должен быть изображением в base64 формате')
         ];
     }
 }

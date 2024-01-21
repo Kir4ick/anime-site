@@ -10,7 +10,7 @@ class FirstCreateArticleOperationInput
 
     private \DateTime $premier;
 
-    private UploadedFile $poster;
+    private string $poster;
 
     /**
      * @return string
@@ -49,20 +49,21 @@ class FirstCreateArticleOperationInput
     }
 
     /**
-     * @return UploadedFile
+     * @return string
      */
-    public function getPoster(): UploadedFile
+    public function getPoster(): string
     {
         return $this->poster;
     }
 
     /**
-     * @param UploadedFile $poster
+     * @param string $poster
      * @return FirstCreateArticleOperationInput
      */
-    public function setPoster(UploadedFile $poster): FirstCreateArticleOperationInput
+    public function setPoster(string $poster): FirstCreateArticleOperationInput
     {
         $this->poster = $poster;
         return $this;
     }
+
 }

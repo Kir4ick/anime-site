@@ -10,6 +10,8 @@ use App\Repositories\ArticleMultfilmRepository;
 use App\Repositories\Interfaces\IArticleMultfilmRepository;
 use App\Repositories\Interfaces\IUserRepository;
 use App\Repositories\UserRepository;
+use App\Services\ImageLoader\ImageBase64Loader;
+use App\Services\ImageLoader\Interfaces\IImageLoader;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
         # Operations
         $this->app->bind(IUserOperations::class, UserOperations::class);
         $this->app->bind(IArticlesMultfilmOperations::class, ArticleMultfilmOperations::class);
+
+        # Services
+        $this->app->bind(IImageLoader::class, ImageBase64Loader::class);
     }
 
     /**

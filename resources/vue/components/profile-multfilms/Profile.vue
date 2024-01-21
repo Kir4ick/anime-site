@@ -4,6 +4,7 @@
             <create-multfilm-form
                 :action-create="props.actionCreate"
                 :loader="props.loader"
+                @updateMultList="unshiftToList"
             ></create-multfilm-form>
         </div>
         <div class="prof-grids">
@@ -17,8 +18,8 @@
 </template>
 
 <script setup>
-import {onBeforeMount, reactive} from "vue";
-import CreateMultfilmForm from "./CreateMultfilmForm.vue";
+    import {onBeforeMount, reactive} from "vue";
+    import CreateMultfilmForm from "./CreateMultfilmForm.vue";
 
     const props = defineProps({
         actionCreate: String,
@@ -27,7 +28,9 @@ import CreateMultfilmForm from "./CreateMultfilmForm.vue";
         loader: String
     })
 
-    const ProfileModel = reactive({})
+    const ProfileModel = reactive({
+        list: []
+    })
 
     async function getMultfilmList() {
         return [{
@@ -35,6 +38,11 @@ import CreateMultfilmForm from "./CreateMultfilmForm.vue";
             created: '20 ноября 2004',
             title: 'Ветер крепчает'
         }]
+    }
+
+    function unshiftToList(element) {
+        console.log(element)
+        ProfileModel.list.unshift(element)
     }
 
     onBeforeMount(async () => {

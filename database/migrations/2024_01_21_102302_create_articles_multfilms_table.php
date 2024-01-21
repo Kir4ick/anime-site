@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('poster');
             $table->string('created'); # Поле для обозначения когда был прокат мультика
             $table->json('story')->default(null);
-            $table->string('story_image')->default(null);
-            $table->string('history_created')->default(null);
+            $table->string('story_image')->default('');
+            $table->string('history_created')->default('');
             $table->json('history_created_image')->default(null);
             $table->json('images')->default(null);
             $table->foreignIdFor(\App\Models\User::class);

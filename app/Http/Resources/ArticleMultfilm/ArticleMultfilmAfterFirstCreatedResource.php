@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\ArticleMultfilm;
 
-use App\Models\ArticleMultfilm;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleMultfilmAfterFirstCreatedResource extends JsonResource
 {
@@ -15,12 +15,11 @@ class ArticleMultfilmAfterFirstCreatedResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var ArticleMultfilm $request */
-
         return [
-            'id' => $request->id,
-            'title' => $request->title,
-            'poster' => url($request->poster)
+            'id' => $this->id,
+            'title' => $this->title,
+            'image' => Storage::disk('local')->url($this->poster),
+            'created' => $this->created
         ];
     }
 }

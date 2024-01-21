@@ -36,20 +36,22 @@
 </template>
 
 <script setup>
-import {onMounted, reactive} from "vue";
-import createArticleErrorListModel from "../../models/components/profile/createArticleErrorListModel.js";
-import createArticleDataModel from "../../models/components/profile/createArticleDataModel.js";
-import {checkIsEmptyStringValue} from "../../../js/validation/validators.js";
-import axios from "axios";
+    import {onMounted, reactive} from "vue";
+    import createArticleErrorListModel from "../../models/components/profile/createArticleErrorListModel.js";
+    import createArticleDataModel from "../../models/components/profile/createArticleDataModel.js";
+    import {checkIsEmptyStringValue, checkIsNullValue, checkUndefinedValue} from "../../../js/validation/validators.js";
+    import {getBase64File} from "../../../js/actions/actions.js";
+    import axios from "axios";
 
     const props = defineProps({
         actionCreate: String,
         loader: String
     })
 
+    const emit = defineEmits(['updateMultList'])
+
     const errorList = reactive({createArticleErrorListModel})
     const dataModel = reactive(createArticleDataModel)
-
     const load = reactive({value: false})
 
     async function createMultfilm() {
@@ -71,7 +73,6 @@ import axios from "axios";
         if (files.length === 0) {
             errorList.poster = 'Загрузите пожалуйста фотографию'
         }
-        dataModel.poster = files[0]
 
         if (
             !checkIsEmptyStringValue(errorList.title) &&
@@ -83,12 +84,12 @@ import axios from "axios";
             return false
         }
 
-        try {
-            let response = await axios.post(props.actionCreate, dataModel)
-            let dataResponse = await response.data
-            console.log(dataResponse)
-        } catch (exception) {
-            console.log(exception)
+        dataModel.poster = await getBase64File(files[0]).then( (data) => { return data })
+
+        let result = await makeRequestCreate()
+        console.log(result)
+        if (!checkIsNullValue(result)) {
+            emit('updateMultList', result)
         }
 
         load.value = !load.value
@@ -104,8 +105,33 @@ import axios from "axios";
         }, 5000)
     })
 
+    async function makeRequestCreate() {
+        try {
+            let response = await axios.post(props.actionCreate, dataModel, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+
+            response = await response.data
+            response = response.data
+
+            if (!checkUndefinedValue(response.error_message)) {
+                errorList.title = response.error_message
+            }
+
+            return response
+        } catch (exception) {
+            if (exception.response.status === 422) {
+                let validationErrors = exception.response.data
+                errorList.poster = validationErrors.poster === undefined ? validationErrors.poster[0] : ''
+                errorList.premier = validationErrors.premier === undefined ? validationErrors.premier[0] : ''
+                errorList.title = validationErrors.title  === undefined ? validationErrors.title[0] : ''
+            }
+
+            return null
+        }
+    }
+
 </script>
-
-<style scoped>
-
-</style>

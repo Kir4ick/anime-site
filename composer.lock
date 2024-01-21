@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c491b8531eec05ba41a11d9276a5749",
+    "content-hash": "7504517696a5ed2d83e493fdef07b77d",
     "packages": [
         {
             "name": "brick/math",
@@ -2314,6 +2314,62 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "oldravian/multi-source-file-uploader",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oldravian/multi-source-file-uploader.git",
+                "reference": "89184cb03c8af79a66c318bd6fc731529c66df46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oldravian/multi-source-file-uploader/zipball/89184cb03c8af79a66c318bd6fc731529c66df46",
+                "reference": "89184cb03c8af79a66c318bd6fc731529c66df46",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "OldRavian\\FileUploader\\FileUploaderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OldRavian\\FileUploader\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Habib urRehman",
+                    "email": "chaudryhabib2@gmail.com",
+                    "homepage": "http://redravian.com"
+                }
+            ],
+            "description": "A Laravel package for handling file upload from multiple sources like file object, url or base64 encoded data",
+            "keywords": [
+                "file-upload",
+                "laravel",
+                "multi-source-file-upload",
+                "upload-file-from-base64",
+                "upload-file-from-file-object",
+                "upload-file-from-url"
+            ],
+            "support": {
+                "issues": "https://github.com/oldravian/multi-source-file-uploader/issues",
+                "source": "https://github.com/oldravian/multi-source-file-uploader/tree/v1.0.0"
+            },
+            "time": "2023-03-27T09:12:08+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -8077,5 +8133,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

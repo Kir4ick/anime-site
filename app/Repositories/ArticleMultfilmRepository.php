@@ -16,9 +16,12 @@ class ArticleMultfilmRepository implements IArticleMultfilmRepository
         /** @var ArticleMultfilm $article_mult */
         $article_mult = ArticleMultfilm::query()->create([
             'title' => $input->getTitle(),
-            'premier' => $input->getPremier(),
+            'created' => $input->getPremier(),
             'poster' => $input->getPoster(),
-            'user_id' => $input->getUserId()
+            'user_id' => $input->getUserId(),
+            'story' => '{}',
+            'history_created_image' => '{}',
+            'images' => '{}'
         ]);
 
         return (new FirstCreateArticleRepositoryOutput())->setArticleMultfilm($article_mult);
