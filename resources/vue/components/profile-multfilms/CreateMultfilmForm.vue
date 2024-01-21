@@ -87,7 +87,6 @@
         dataModel.poster = await getBase64File(files[0]).then( (data) => { return data })
 
         let result = await makeRequestCreate()
-        console.log(result)
         if (!checkIsNullValue(result)) {
             emit('updateMultList', result)
         }

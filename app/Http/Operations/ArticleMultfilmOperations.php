@@ -4,7 +4,11 @@ namespace App\Http\Operations;
 
 use App\Dto\Operations\ArticleMultfilm\FirstCreateArticleOperationInput;
 use App\Dto\Operations\ArticleMultfilm\FirstCreateArticleOperationOutput;
+use App\Dto\Operations\ArticleMultfilm\GetArticleMultfilmListOperationInput;
+use App\Dto\Operations\ArticleMultfilm\GetArticleMultfilmListOperationOutput;
+use App\Dto\Repositories\ArticleMultfilm\CountArticleMultfilmListRepositoriesInput;
 use App\Dto\Repositories\ArticleMultfilm\FirstCreateArticleRepositoryInput;
+use App\Dto\Repositories\ArticleMultfilm\GetArticleMultfilmListRepositoriesInput;
 use App\Http\Operations\Interfaces\IArticlesMultfilmOperations;
 use App\Repositories\Interfaces\IArticleMultfilmRepository;
 use App\Services\ImageLoader\Interfaces\IImageLoader;
@@ -41,7 +45,7 @@ class ArticleMultfilmOperations implements IArticlesMultfilmOperations
                 ->setPoster($poster_path)
                 ->setUserId($user_id);
 
-            $repository_response = $this->repository->firstCreateArticleRepository($repository_input);
+            $repository_response = $this->repository->firstCreateArticle($repository_input);
             if ($repository_response->getArticleMultfilm() == null) {
                 $error_message = __('Не удалось создать новую статью по мультфильму');
             }
@@ -61,5 +65,32 @@ class ArticleMultfilmOperations implements IArticlesMultfilmOperations
         return (new FirstCreateArticleOperationOutput())
             ->setArticleMultfilm($article_multfilm)
             ->setErrorMessage($error_message);
+    }
+
+    public function getMultfilmList(GetArticleMultfilmListOperationInput $input): GetArticleMultfilmListOperationOutput
+    {
+        $user_id = Auth::user()->id;
+
+        $count = $this->repository->getCountArticle(
+            (new CountArticleMultfilmListRepositoriesInput())->setUserId($user_id)
+        );
+
+        $offset = $input->getLimitPage() * ($input->getPage() !== 0 ? $input->getPage() : 1);
+
+        $collection = $this->repository->getListArticles(
+            (new GetArticleMultfilmListRepositoriesInput())
+                ->setLimit($input->getLimitPage())
+                ->setOffset($offset)
+        );
+
+        $total_pages = (int)($count / $input->getLimitPage());
+        if ($total_pages === 0) {
+            $total_pages = 1;
+        }
+
+        return (new GetArticleMultfilmListOperationOutput())
+            ->setArticlesCollection($collection->getArticlesCollection())
+            ->setCurrentPage($input->getPage())
+            ->setTotalPages($total_pages);
     }
 }

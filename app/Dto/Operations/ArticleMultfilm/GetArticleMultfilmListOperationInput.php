@@ -2,9 +2,6 @@
 
 namespace App\Dto\Operations\ArticleMultfilm;
 
-/**
- * Пока пустое, мб в будущем будут ещё фильтры
- */
 class GetArticleMultfilmListOperationInput
 {
     private int $page;
