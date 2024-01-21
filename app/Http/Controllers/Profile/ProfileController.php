@@ -12,8 +12,7 @@ class ProfileController extends Controller
     {
         /** @var User $user */
         $user = \Illuminate\Support\Facades\Auth::user();
-        $avatar_url = \Illuminate\Support\Facades\Storage::disk('local')
-            ->url($user->avatar);
+        $avatar_url = \Illuminate\Support\Facades\Storage::disk('local')->url($user->avatar);
         $nickname = $user->nickname;
         return view('pages.profile', compact('avatar_url', 'nickname'));
     }

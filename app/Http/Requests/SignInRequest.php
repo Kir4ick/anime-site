@@ -35,10 +35,10 @@ class SignInRequest extends FormRequest
     public function messages()
     {
         return [
-            'login.required' => 'Пожалуйста, введите логин',
-            'login.min' => 'Поле логин не может быть короче двух символов',
-            'password.required' => 'Пожалуйста, введите пароль',
-            'password.min' => 'Пароль не может быть короче четырёх символов'
+            'login.required' => __('Пожалуйста, введите логин'),
+            'login.min' => __('Поле логин не может быть короче двух символов'),
+            'password.required' => __('Пожалуйста, введите пароль'),
+            'password.min' => __('Пароль не может быть короче четырёх символов')
         ];
     }
 }

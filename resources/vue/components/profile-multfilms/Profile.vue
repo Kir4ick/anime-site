@@ -1,7 +1,10 @@
 <template>
     <section class="general">
         <div class="forms">
-            <create-multfilm-form :action-create="props.actionCreate"></create-multfilm-form>
+            <create-multfilm-form
+                :action-create="props.actionCreate"
+                :loader="props.loader"
+            ></create-multfilm-form>
         </div>
         <div class="prof-grids">
             <mult-list
@@ -20,7 +23,8 @@ import CreateMultfilmForm from "./CreateMultfilmForm.vue";
     const props = defineProps({
         actionCreate: String,
         hrefPatch: String,
-        hrefImage: String
+        hrefImage: String,
+        loader: String
     })
 
     const ProfileModel = reactive({})

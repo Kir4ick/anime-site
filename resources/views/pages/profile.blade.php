@@ -10,7 +10,8 @@
     <profile
         href-image = '{!! asset('img/Group 157.png') !!}'
         href-patch = '{!! 'http' !!}'
-        action-create = '{!! 'http' !!}'
+        action-create = '{!! route('create-article') !!}'
+        loader = '{!! asset('img/tube-spinner.svg') !!}'
     ></profile>
 
 </section>
