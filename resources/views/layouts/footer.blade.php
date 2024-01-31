@@ -9,7 +9,7 @@
         <p class="textt2">Коллекция мультфильмов</p>
     </a>
     <p class="textt3">Следи за нами</p>
-    <img class="free-icon" src="img/free-icon-telegram-739260.png" alt="">
-    <img class="free-icon" src="img/free-icon-youtube-1077046.png" alt="">
-    <img class="free-icon" src="img/free-icon-vk-2111828.png" alt="">
+    <img class="free-icon" src="{{ asset('img/free-icon-telegram-739260.png') }}" alt="">
+    <img class="free-icon" src="{{ asset('img/free-icon-youtube-1077046.png') }}" alt="">
+    <img class="free-icon" src="{{ asset('img/free-icon-vk-2111828.png') }}" alt="">
 </footer>

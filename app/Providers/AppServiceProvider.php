@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Http\Operations\ArticleMultfilmOperations;
-use App\Http\Operations\Interfaces\IArticlesMultfilmOperations;
+use App\Http\Operations\ArticleOperations;
+use App\Http\Operations\Interfaces\IArticlesOperations;
 use App\Http\Operations\Interfaces\IUserOperations;
 use App\Http\Operations\UserOperations;
 use App\Repositories\ArticleMultfilmRepository;
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
 
         # Operations
         $this->app->bind(IUserOperations::class, UserOperations::class);
-        $this->app->bind(IArticlesMultfilmOperations::class, ArticleMultfilmOperations::class);
+        $this->app->bind(IArticlesOperations::class, ArticleOperations::class);
 
         # Services
         $this->app->bind(IImageLoader::class, ImageBase64Loader::class);

@@ -20,12 +20,14 @@
 <script setup>
     import {onBeforeMount, reactive} from "vue";
     import CreateMultfilmForm from "./CreateMultfilmForm.vue";
+    import axios from "axios";
 
     const props = defineProps({
         actionCreate: String,
         hrefPatch: String,
         hrefImage: String,
-        loader: String
+        loader: String,
+        actionList: String
     })
 
     const ProfileModel = reactive({
@@ -33,15 +35,18 @@
     })
 
     async function getMultfilmList() {
-        return [{
-            image: 'http://sc.ru/img/Rectangle%2031.png',
-            created: '20 ноября 2004',
-            title: 'Ветер крепчает'
-        }]
+
+        let response = {data: []}
+
+        try {
+            response = await axios.get(props.actionList)
+            response = response.data
+        } catch (exception) {}
+
+        return response.data
     }
 
     function unshiftToList(element) {
-        console.log(element)
         ProfileModel.list.unshift(element)
     }
 

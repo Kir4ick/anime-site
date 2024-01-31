@@ -97,7 +97,7 @@
     function redirectToPage() {
         setTimeout(() => {
             window.location.href = props.redirectPage
-        }, 3000)
+        }, 1000)
     }
 
     onMounted(() => {
